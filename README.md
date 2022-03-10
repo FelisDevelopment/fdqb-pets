@@ -10,7 +10,7 @@ If you prefer, please make a PR since it's a free resource and is available to a
 ### 1. Inventory images
 Please copy item icons from `images` folder to your inventory resource.
 
-#### 2. Add items
+#### 2. Add items to your core
 ```lua
 --Animals
 ["rottweiler1"] = {
