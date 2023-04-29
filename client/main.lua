@@ -24,34 +24,25 @@ MultipleChecksThread = function()
                 exports['fd-pets']:ForceCloseMenu()
             end
 
+
             -- Check if player still has item
-            QBCore.Functions.TriggerCallback('QBCore:HasItem', function(hasItem)
-                if not hasItem then
-                    exports['fd-pets']:SpawnPet('recall')
-                    Reset()
-                end
-            end, Data.item)
+            local hasItem = QBCore.Functions.HasItem(Data.item, 1)
+            if not hasItem then
+                exports['fd-pets']:SpawnPet('recall')
+                Reset()
+            end
         end
     end)
 end
 
 -- Overrides
 exports['fd-pets']:OverrideMethod("OnTryingToSpawnPet", function(pet, config)
-    local retval = nil
-
-    QBCore.Functions.TriggerCallback('QBCore:HasItem', function(hasItem)
-        if hasItem then
-            retval = true
-        else
-            retval = false
-        end
-    end, pet)
-
-    while retval == nil do
-        Wait(0)
+    local hasItem = QBCore.Functions.HasItem(pet, 1)
+    if not hasItem then
+        return false
     end
 
-    return retval
+    return true
 end)
 
 exports['fd-pets']:OverrideMethod("OnStartingAction", function(action, netId, config)
